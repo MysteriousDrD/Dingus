@@ -79,7 +79,20 @@ func init() {
 					compString := string(compData)
 					response.Text = rUsername + ": " + compString
 				}
-
+				if strings.HasPrefix(text,"Dingus: roast me"){
+					url := "http://127.0.0.1:56736"
+					comp, err := http.Get(url)
+					if err != nil {
+						log.Fatal(err)
+					}
+					defer comp.Body.Close()
+					compData, err := ioutil.ReadAll(comp.Body)
+					if err != nil {
+						log.Fatal(err)
+					}
+					compString := string(compData)
+					response.Text = rUsername + ": " + compString
+				}
 				if strings.HasPrefix(text, "Dingus: insult me"){
 					url := "http://insult-me-dingus.herokuapp.com/"
 					comp, err := http.Get(url)
@@ -94,7 +107,9 @@ func init() {
 					compString := string(compData)
 					response.Text = rUsername + ": " + compString
 				}
-
+			 if strings.Contains(text, "slackbot"){
+					response.Text = "You expected slackbot? Too Bad! It was me, Dingus! :dio:"
+				}
 				log.Printf("Sending response: %s", response.Text)
 
 				b, err := json.Marshal(response)
